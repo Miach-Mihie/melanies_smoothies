@@ -40,3 +40,10 @@ if ingredients_list:
             params=[ingredients_string, name_on_order],
         ).collect()
         st.success(f"Your Smoothie is ordered, {name_on_order}!", icon="✅")
+
+
+
+
+import requests
+smoothiefroot_response = requests.get("https://my.smoothiefroot.com/api/fruit/watermelon")
+st.text(smoothiefroot_response)
