@@ -15,17 +15,14 @@ cnx = st.connection("snowflake")
 session = cnx.session()
 
 # フルーツ候補をリスト化
-fruit_options = (
-    session.table("smoothies.public.fruit_options")
-    .select(col("FRUIT_NAME"))
-    .to_pandas()["FRUIT_NAME"]
-    .tolist()
-)
-
+my_dataframe = (
+    session.table("smoothies.public.fruit_options").select(col("FRUIT_NAME")),col('SEARCH_ON'))
+st.dataframe(data=my_dataframe, use_container_width=True)
+st.stop()
 # 上限5個に制限
 ingredients_list = st.multiselect(
     "Choose up to 5 ingredients:",
-    options=fruit_options,
+    options=my_dataframe,
     max_selections=5,
 )
 
