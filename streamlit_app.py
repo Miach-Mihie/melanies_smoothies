@@ -15,10 +15,15 @@ cnx = st.connection("snowflake")
 session = cnx.session()
 
 # フルーツ候補をリスト化
-my_dataframe = (
-    session.table("smoothies.public.fruit_options").select(col("FRUIT_NAME")),col('SEARCH_ON'))
-st.dataframe(data=my_dataframe, use_container_width=True)
+my_dataframe = (session.table("smoothies.public.fruit_options").select(col("FRUIT_NAME")),col('SEARCH_ON'))
+#st.dataframe(data=my_dataframe, use_container_width=True)
+#st.stop()
+
+# Convert the snowpark dataframe to a pandas dataframe so we can the LOC function
+pd_df=my_dataframe.to_pandas()
+st.dataframe(pd_df)
 st.stop()
+
 # 上限5個に制限
 ingredients_list = st.multiselect(
     "Choose up to 5 ingredients:",
